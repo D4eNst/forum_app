@@ -1,0 +1,90 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru">
+
+    <head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cайт-форум</title>
+
+    {% block head %}
+    {% endblock %}
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'forum_app/css/style.css' %}">
+    </head>
+
+<body>
+    <script>
+        const csrf_token = "{{ csrf_token }}";
+        console.log("csrf_token:", csrf_token); // Добавьте эту строку для отладки
+    </script>
+
+    {% comment %}<script src="{% static 'your_script.js' %}"></script>{% endcomment %}
+
+    {% block header %}
+    <header>
+        <div class="logo">
+            <img src="{% comment %}{% static 'images/logo.png' %}{% endcomment %}" alt="Логотип">
+        </div>
+        <div class="header-wrapper">
+            <nav>
+                <ul>
+                    {% if not user.is_authenticated %}
+                    <li><a
+                        href="{% url 'login' %}{% if request.GET.next %}?next={{ request.GET.next }}{% else %}?next={{ request.path }}{% endif %}"
+                        class="login">
+                        Вход
+                    </a></li>
+                    {% else %}
+                    <li><a href="{% url 'profile' user.username %}" class="login">{{ user.username }}</a></li>
+                    {% endif %}
+
+                    <li><a href="{% url 'main-page' %}">Главная</a></li>
+                    <li><a href="{% url 'forum' %}">Форум</a></li>
+                    <li><a href="/about/">О нас</a></li>
+                    <li><a href="/contact/">Контакты</a></li>
+                    <!-- Добавьте другие ссылки на страницы вашего сайта -->
+                </ul>
+            </nav>
+            <div class="search">
+                <form action="{% url 'forum' %}" method="get">
+                    <label>
+                        <input type="text" name="search" placeholder="Поиск... " value="{{ request.GET.search }}">
+                    </label>
+                    <button type="submit">Искать</button>
+                </form>
+            </div>
+        </div>
+    </header>
+    {% endblock %}
+
+    <main>
+        <section class="content">
+            {% block content %}
+
+            {% endblock %}
+        </section>
+        <aside class="sidebar">
+            <!-- Дополнительные блоки, виджеты, реклама и т. д. -->
+        </aside>
+    </main>
+
+    {% block footer %}
+    <footer>
+        &copy; {{ year }} Сайт-форум
+    </footer>
+    {% endblock %}
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+
+    <script src="{% static 'forum_app/js/post.js' %}"></script>
+    <script src="{% static 'forum_app/js/script.js' %}"></script>
+
+</body>
+</html>

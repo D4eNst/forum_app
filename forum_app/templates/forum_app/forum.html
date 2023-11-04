@@ -1,0 +1,41 @@
+{% extends 'forum_app/base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="forum-list">
+    <h2>Категории</h2>
+    <ul>
+        {% if not categories %}
+            <br>
+            <h4>Ничего не найдено :(</h4>
+        {% endif %}
+        {% for category in categories %}
+        <li>
+            <h3><a href="{{ category.get_absolute_url }}">{{ category.name }}</a></h3>
+            <p>{{ category.descr }}</p>
+            <ul class="thread-list">
+                {% if category.post_set.count > 0 %}
+                {% for post in category.post_set.all|slice:"10" %}
+                    {% if post.is_active %}
+                    <li><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></li>
+                    {% endif %}
+                {% endfor %}
+                {% else %}
+                    <h3>Ничего не найдено!</h3>
+                {% endif %}
+
+                {% if category.post_set.count > 10 %}
+                    <div class="more">...</div>
+                {% endif %}
+{#                <li><a href="/forums/anime-recommendations/457">Best Romance Anime</a></li>#}
+                <!-- Add more threads for this forum -->
+            </ul>
+        </li>
+        {% endfor %}
+        <!-- Add more forum categories and descriptions -->
+    </ul>
+</section>
+
+{% include 'forum_app/paginate.html' %}
+
+{% endblock %}

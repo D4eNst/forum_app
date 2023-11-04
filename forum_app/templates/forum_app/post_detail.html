@@ -1,0 +1,118 @@
+{% extends 'forum_app/base.html' %}
+{% load static %}
+{% load markdown_filter %}
+
+
+{% block head %}
+    {{ form.media }}
+{% endblock %}
+
+{% block content %}
+    {% comment %}<h1>{{ post.title }}</h1>{% endcomment %}
+    <section class="post">
+            <article>
+                {% comment %}<p>{{ post.text|linebreaksbr|safe }}</p>{% endcomment %}
+                <div class="post-content">
+                    {{ post.text|safe_markdown|safe }}
+                </div>
+                <hr>
+
+                <p>Автор: <a href="{% url 'profile' post.user.username %}" class="text-decoration-none">{{ post.user.username }}</a></p>
+                <p>Дата добавления: {{ post.created_at }}</p>
+                <p>Просмотры: {{ post.views_cnt }}</p>
+                <p data-post-id="{{ post.id }}" class="comment-like" id="post-likes-count">Лайки: {{ post.likes.count }}</p>
+
+                <hr>
+
+            </article>
+
+            {% if request.user.is_authenticated %}
+                {% if post.user == request.user or request.user.is_staff %}
+                    <!-- Добавьте кнопку для редактирования комментария -->
+                    <a href="{% url 'edit-post' post.slug %}" class="edit-post">Редактировать</a>
+                    <!-- Добавьте кнопку для удаления комментария -->
+                    <a href="{% url 'delete-post' post.slug %}" class="delete-post">Удалить</a>
+                {% endif %}
+                <!-- Добавьте кнопку для лайка комментария -->
+                <button
+                    class="like-post"
+                    id="like-post"
+                    data-post-id="{{ post.id }}"
+                    data-liked="{% if post|check_post_like:user %}true">Отменить
+                                                             {% else %}false">Лайк{% endif %}</button>
+            {% endif %}
+        </section>
+
+        {% if post.is_active %}
+        <!-- Поле для добавления нового комментария (если пользователь зарегистрирован) -->
+        {% if user.is_authenticated %}
+            <section class="new-comment">
+                <h2>Добавить комментарий</h2>
+                <form method="post" action="{% url 'post_detail' post.slug %}">
+                    {% csrf_token %}
+{#                    <label>#}
+{#                        <textarea name="text" rows="4" cols="50" placeholder="Введите ваш комментарий"></textarea>#}
+{#                    </label>#}
+                        {{ form.text }}
+
+                    <input type="submit" value="Добавить комментарий">
+                </form>
+
+
+{#            {{ add_comment_form.media }}#}
+            </section>
+        {% else %}
+            <!-- Ссылка на страницу регистрации (если пользователь не зарегистрирован) -->
+            <p>Для того чтобы добавить комментарий, <a href="{% url 'login' %}?next={{ request.path }}">зарегистрируйтесь</a>.</p>
+        {% endif %}
+
+        <section class="comments">
+            <h2>Комментарии</h2>
+            <ul>
+                {% if comments.count > 0 %}
+                    {% for comment in comments %}
+                        <li id="com-{{ comment.pk }}" >
+                            <div class="author">{{ comment.user.username }}</div>
+                            <p>{{ comment.text | safe_markdown | safe }}</p>
+
+                            <div class="comment-action">
+                                {% if request.user.is_authenticated %}
+                                    {% if comment.user == request.user or request.user.is_staff %}
+                                        <!-- Добавьте кнопку для редактирования комментария -->
+                                        <a href="{% url 'edit-comment' comment.id %}" class="edit-comment">Редактировать</a>
+                                        <!-- Добавьте кнопку для удаления комментария -->
+                                        <a href="{% url 'delete-comment' comment.id %}" class="delete-comment">Удалить</a>
+                                    {% endif %}
+                                    <!-- Добавьте кнопку для лайка комментария -->
+                                    <button
+                                        data-com-id="{{ comment.id }}"
+                                        class="like-comment like-link"
+                                        data-liked="{% if comment|check_comment_like:user %}true">Отменить
+                                                                                 {% else %}false">Лайк{% endif %}
+                                    </button>
+                                {% endif %}
+
+                                <div class="comment-data">
+                                    <div class="comment-date">{{ comment.created_at }}</div>
+                                    <div data-com-id="{{ comment.id }}" class="comment-like likes-count">
+                                        likes: {{ comment.likes.count }}
+                                    </div>
+                                </div>
+                            </div>
+
+                        </li>
+                    {% endfor %}
+                {% else %}
+                     <h3>Напиши свой комментарий и стань первым!</h3>
+                {% endif %}
+            </ul>
+        </section>
+        {% else %}
+            <form method="post">
+                {% csrf_token %}
+                <input type="hidden" name="confirm_post" value="true">
+                <button type="submit" class="btn btn-primary" value="confirm_post">Опубликовать</button>
+            </form>
+        {% endif %}
+
+{% endblock %}

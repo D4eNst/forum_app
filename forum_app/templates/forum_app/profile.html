@@ -1,0 +1,47 @@
+{% extends 'forum_app/profile_base.html' %}
+{% load static %}
+
+{% block profile_content %}
+    <div class="card profile-card">
+        <div class="card-header">
+            <h2>Подробности профиля</h2>
+        </div>
+        <div class="card-body">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <strong>Посты:</strong> {{ post_cnt }}
+                </li>
+                <li class="list-group-item">
+                    <strong>Лайки на постах:</strong> {{ post_likes_cnt }}
+                </li>
+                <li class="list-group-item">
+                    <strong>Комментарии:</strong> {{ user_obj.comment_set.count }}
+                </li>
+                <li class="list-group-item">
+                    <strong>Лайки на комментариях:</strong> {{ com_likes_cnt }}
+                </li>
+                <li class="list-group-item">
+                    <strong>Дата регистрации:</strong> {{ user_obj.date_joined }}
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="card profile-card mt-4">
+        <div class="card-header">
+            <h3>Последние действия</h3>
+        </div>
+        <div class="card-body">
+            <ul class="list-group list-group-flush">
+                {% if not activity %}
+                    <h4>Тут ничего нет :(</h4>
+                {% endif %}
+                {% for active in activity %}
+                    <li class="list-group-item">
+                        {{ active.action_type }}
+                        <a href="{% url 'post_detail' active.post.slug %}">{{ active.post.title }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends 'forum_app/base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="registration-form">
+        <h2>Вход</h2>
+        <form method="post">
+            {% csrf_token %}
+
+            <div class="error-message">{{ form.non_field_errors }}</div>
+
+            {% for f in form %}
+            <div class="form-group{% if f.errors %} error{% endif %}">
+                <label for="{{ f.id_for_label }}">{{ f.label }}</label>
+                {{ f }}
+                <div class="error-message">
+                    {{ f.errors }}
+                </div>
+            </div>
+            {% endfor %}
+
+
+            <button type="submit">Войти</button>
+            <p>Ещё не зарегистрированы? <a href="{% url 'signup' %}?next={{ request.GET.next }}">Регистрация</a></p>
+        </form>
+    </div>
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends 'forum_app/profile_base.html' %}
+{% load static %}
+
+{% block profile_content %}
+    <div class="card profile-card">
+        <div class="card-header">
+            <h2>{{ users_post_title }}</h2>
+        </div>
+        <div class="card-body">
+            <div class="profile-posts-filter mb-3">
+                <div class="btn-group mr-5" id="date-sort">
+                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                        Сортировка
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <li><a class="dropdown-item{% if not request.GET.date or request.GET.date == 'down' %} active{% endif %}" href="?date=down{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">По дате ↓</a></li>
+                        <li><a class="dropdown-item{% if request.GET.date == 'up' %} active{% endif %}" href="?date=up{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">По дате ↑</a></li>
+                    </div>
+                </div>
+
+                <div class="posts-search">
+                    <form class="form-inline" action="{{ request.path }}" method="get"> <!-- Замените "action" на URL вашего обработчика поиска -->
+                        <div class="input-group">
+                            {% for key, value in request.GET.items %}
+                                <input type="hidden" name="{{ key }}" value="{{ value }}">
+                            {% endfor %}
+                            <label>
+                                <input type="text" class="form-control" value="{{ request.GET.q }}" name="q" placeholder="Поиск..." />
+                            </label>
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="submit">Поиск</button>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+                <a href="{{ request.path }}"><button class="btn btn-secondary ml-3">Сброс</button></a>
+            </div>
+            {% if not posts %}
+                <h3 class="mt-4">Записи не найдены</h3>
+            {% endif %}
+            <ul class="list-group list-group-flush">
+                {% for post in posts %}
+                    <li class="list-group-item">
+                        <a href="{% url 'post_detail' post.slug %}">{{ post.title }} -- {{ post.category.name }} ({{ post.views_cnt }})</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    {% include 'forum_app/paginate.html' %}
+
+{% endblock %}

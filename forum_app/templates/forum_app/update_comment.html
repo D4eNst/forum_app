@@ -1,0 +1,22 @@
+{% extends 'forum_app/base.html' %}
+{% load static %}
+{% block head %}
+    {{ form.media }}
+{% endblock %}
+{% block content %}
+    <section class="new-comment">
+    <h2>Изменить комментарий</h2>
+    <form method="post" action="{% url 'edit-comment' comment.id %}">
+        {% csrf_token %}
+{#                    <label>#}
+{#                        <textarea name="text" rows="4" cols="50" placeholder="Введите ваш комментарий"></textarea>#}
+{#                    </label>#}
+            {{ form.text }}
+
+        <input type="submit" value="Изменить комментарий">
+    </form>
+
+
+{#            {{ add_comment_form.media }}#}
+            </section>
+{% endblock %}

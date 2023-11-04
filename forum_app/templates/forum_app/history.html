@@ -1,0 +1,83 @@
+{% extends 'forum_app/profile_base.html' %}
+{% load static %}
+
+{% block profile_content %}
+<div class="card profile-card">
+    <div class="card-header">
+        <h2>История</h2>
+    </div>
+    <div class="card-body">
+        <div class="btn-group mb-3" id="date-sort">
+            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                Сортировка
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <li><a class="dropdown-item{% if not request.GET.date or request.GET.date == 'down' %} active{% endif %}" href="?date=down">По дате ↓</a></li>
+                <li><a class="dropdown-item{% if request.GET.date == 'up' %} active{% endif %}" href="?date=up">По дате ↑</a></li>
+            </div>
+        </div>
+        <div class="btn-group mb-3" id="action-filter">
+            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                Фильтр по действиям
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <li><a class="dropdown-item" href="?action=new_post">Новые посты</a></li>
+                <li><a class="dropdown-item" href="?action=comments">Комментарии</a></li>
+                <li><a class="dropdown-item" href="?action=likes">Лайки</a></li>
+            </div>
+        </div>
+        <ul class="list-group list-group-flush">
+            {% for active in activity %}
+                <li class="list-group-item">
+                    {{ active.action_type }}
+                    <a href="{% url 'post_detail' active.post.slug %}">{{ active.post.title }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+{% include 'forum_app/paginate.html' %}
+{% endblock %}
+
+{% block scripts %}
+<script>
+
+    // Функция для обработки кликов на ссылках с датой
+    document.querySelectorAll("#date-sort .dropdown-item").forEach(function(item) {
+        item.addEventListener("click", function(e) {
+            e.preventDefault();
+            const dateParam = item.getAttribute("href").split('=')[1];
+            const currentParams = new URLSearchParams(window.location.search);
+            currentParams.set("date", dateParam);
+            window.location.search = currentParams.toString();
+        });
+    });
+
+    // Функция для обработки кликов на кнопках с действиями
+    document.querySelectorAll("#action-filter .dropdown-item").forEach(function(item) {
+        item.addEventListener("click", function(e) {
+            e.preventDefault();
+            const actionParam = item.getAttribute("href").split('=')[1];
+            const currentParams = new URLSearchParams(window.location.search);
+            // Получаем параметр action и разбиваем его на массив
+            let existingActions = currentParams.has('action') ? currentParams.get('action').split(" ") : [];
+
+
+            if (existingActions.includes(actionParam)) {
+                // Убрать действие, если оно уже есть
+                existingActions = existingActions.filter(a => a !== actionParam);
+            } else {
+                // Добавить действие, разделяя их знаком "+"
+                existingActions.push(actionParam);
+            }
+
+            currentParams.delete("action");
+            if (existingActions.length > 0)
+                currentParams.append("action", existingActions.join(" "))
+
+            window.location.search = currentParams.toString();
+        });
+    });
+</script>
+{% endblock %}

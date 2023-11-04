@@ -1,0 +1,570 @@
+/* style.css */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+}
+
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 0;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+hr {
+    margin: 15px 0;
+}
+
+.logo img {
+    max-width: 150px;
+}
+
+.header-wrapper {
+    width: 50%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+nav li {
+    display: inline;
+    margin-right: 20px;
+}
+
+nav a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+nav a:hover {
+    color: #ff6600;
+}
+
+.login {
+    color: whitesmoke;
+    font-weight: normal;
+}
+
+.search {
+    text-align: right;
+}
+
+.search input[type="text"] {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-size: 14px;
+    width: 200px;
+}
+
+.search button[type="submit"] {
+    padding: 6px 12px;
+    background-color: #ff6600;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.search button[type="submit"]:hover {
+    background-color: #e65c00;
+}
+
+main {
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+section .main-section {
+    margin-bottom: 1%;
+
+}
+
+.content {
+    flex-grow: 2;
+    flex-basis: 77%;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    min-height: 100vh;
+}
+
+.sidebar {
+    flex-basis: 23%;
+    margin-left: 2%;
+    background-color: #f5f5f5;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 10px 0;
+}
+
+
+
+.categories,
+.latest-threads {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.categories h2,
+.latest-threads h2 {
+    font-size: 1.6rem;
+    margin-bottom: 10px;
+}
+
+.categories ul,
+.latest-threads ul {
+    list-style: none;
+    padding: 0;
+}
+
+.categories li,
+.latest-threads li {
+    display: block;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.categories a,
+.latest-threads a {
+    display: block;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.categories .post-title,
+.latest-threads .post-title {
+    color: #333;
+    font-weight: bold;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    margin-bottom: 5px;
+}
+
+.categories a:hover,
+.latest-threads a:hover {
+    transform: scale(1.01, 1.05);
+}
+
+/*.categories p,
+.latest-threads p {
+    font-size: 0.9rem;
+    color: #666;
+}*/
+.categories .post-descr,
+.latest-threads .post-descr {
+    font-size: 0.9rem;
+    color: #666;
+    margin: 0;
+}
+
+/* Style for the forum list section */
+.forum-list {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.forum-list h2 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.forum-list ul {
+    list-style: none;
+    padding: 0;
+}
+
+.forum-list li {
+    margin-bottom: 20px;
+    border: 1px solid #e5e5e5;
+    border-radius: 5px;
+    padding: 15px;
+}
+
+.forum-list h3 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+.forum-list p {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.forum-list .more {
+    margin-left: 5px;
+    padding: 5px;
+}
+
+/* Style for the thread list */
+.thread-list {
+    list-style: none;
+    padding: 0;
+}
+
+.thread-list li {
+    margin-bottom: 5px;
+}
+
+.thread-list a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.thread-list a:hover {
+    color: #ff6600;
+}
+
+
+
+/* Стили для контейнера пагинации */
+.pagination {
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* Стили для ссылок внутри пагинации */
+.step-links a {
+    display: inline-block;
+    padding: 5px 10px;
+    margin: 0 5px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 3px;
+    transition: background-color 0.2s;
+}
+
+.step-links a:hover {
+    background-color: #0056b3;
+}
+
+/* Стили для текущей страницы и общего числа страниц */
+.current-page {
+    display: inline-block;
+    padding: 5px 10px;
+    background-color: #f0f0f0;
+    color: #333;
+    border-radius: 3px;
+}
+
+/* Стили для стрелок "первая" и "последняя" */
+.step-links a:first-child,
+.step-links a:last-child {
+    background-color: #333;
+}
+
+.step-links a:first-child:hover,
+.step-links a:last-child:hover {
+    background-color: #222;
+}
+
+
+/* Стили для основной секции */
+.post {
+    background-color: #fff;
+    padding: 20px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+/* Стили для комментариев */
+.comments {
+    margin-top: 20px;
+    background-color: #f7f7f7;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+.comments h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.comments ul {
+    list-style: none;
+    padding: 0;
+}
+
+.comments li {
+    display: block;
+    margin: 20px 10px;
+    padding: 0 20px 20px 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.comments li .author {
+    margin-top: 10px;
+    font-weight: bold;
+}
+.comments li .comment-action {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+.comments li .comment-data {
+    margin-left: auto;
+}
+.comments li .comment-like,
+.comments li .comment-date {
+    font-weight: 100;
+    display: inline-block;
+    margin-left: 10px   ;
+}
+
+/* Стили для добавления нового комментария */
+.new-comment {
+    background-color: #fff;
+    padding: 20px;
+    margin-top: 20px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+.new-comment h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.new-comment textarea {
+    width: 50%;
+    min-height: 150px;
+    padding: 10px;
+    margin: 10px 0;
+    border: 2px solid #ccc;
+    border-radius: 3px;
+}
+
+.new-comment input[type="submit"] {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.new-comment input[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+/* Ссылка на регистрацию */
+.register-link {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.register-link:hover {
+    text-decoration: underline;
+}
+
+
+
+/* Стили для кнопки "Редактировать" */
+.edit-post,
+.edit-comment {
+    background-color: #007bff; /* Синий цвет фона */
+    color: #fff; /* Белый цвет текста */
+    border: none; /* Убрать границу */
+    padding: 5px 10px; /* Отступы внутри кнопки */
+    border-radius: 5px; /* Скругленные углы */
+    text-decoration: none; /* Убрать подчеркивание текста */
+    margin-right: 10px; /* Отступ справа */
+}
+
+/* Стили для кнопки "Удалить" */
+.delete-post,
+.delete-comment {
+    background-color: #dc3545; /* Красный цвет фона */
+    color: #fff; /* Белый цвет текста */
+    border: none; /* Убрать границу */
+    padding: 5px 10px; /* Отступы внутри кнопки */
+    border-radius: 5px; /* Скругленные углы */
+    text-decoration: none; /* Убрать подчеркивание текста */
+    margin-right: 10px; /* Отступ справа */
+}
+
+/* Стили для кнопки "Лайк" */
+.like-post,
+.like-comment {
+    background-color: #28a745; /* Зеленый цвет фона */
+    color: #fff; /* Белый цвет текста */
+    border: none; /* Убрать границу */
+    padding: 5px 10px; /* Отступы внутри кнопки */
+    border-radius: 5px; /* Скругленные углы */
+    text-decoration: none; /* Убрать подчеркивание текста */
+    margin-right: 10px; /* Отступ справа */
+}
+
+/* При наведении на кнопки добавим немного стилизации */
+.edit-post:hover,
+.delete-post:hover,
+.like-post:hover,
+.edit-comment:hover,
+.delete-comment:hover,
+.like-comment:hover {
+    opacity: 0.8; /* Понижаем немного прозрачность при наведении */
+    cursor: pointer; /* Показываем указатель при наведении */
+}
+
+/* Убираем стандартное оформление ссылок */
+.edit-post,
+.delete-post,
+.like-post,
+.edit-comment,
+.delete-comment,
+.like-comment {
+    text-decoration: none;
+}
+
+/* Убираем стандартное оформление ссылок при нажатии */
+.edit-post:active,
+.delete-post:active,
+.like-post:active,
+.edit-comment:active,
+.delete-comment:active,
+.like-comment:active {
+    text-decoration: none;
+}
+
+
+
+
+/* Стилизация общего контейнера формы */
+.create-post-form,
+.registration-form {
+  width: 300px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f5f5f5;
+}
+    .create-post-form {
+        min-width: 80%;
+    }
+
+/* Стилизация меток и полей ввода */
+.form-group {
+  margin-bottom: 15px;
+}
+
+.create-post-form,
+.registration-form label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+.create-post-form label {
+    display: inline-block;
+    width: 20%;
+}
+
+.create-post-form input[type="text"],
+.registration-form input[type="text"],
+.registration-form input[type="email"],
+.registration-form input[type="password"] {
+    width: 200px;
+    padding: .375rem .75rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#add_new_category {
+    display: inline-block;
+    width: 20px;
+    text-align: center;
+    text-decoration: none;
+    color: #000;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+
+/* Стилизация кнопки отправки */
+.create-post-form button[type="submit"],
+.registration-form button[type="submit"] {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.create-post-form button[type="submit"]:hover,
+.registration-form button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+/* Стилизация полей с ошибками */
+.form-group {
+    margin-bottom: 15px;
+}
+
+/* Стилизация полей ввода с ошибками */
+.create-post-form .error input[type="text"],
+.registration-form .error input[type="text"],
+.registration-form .error input[type="email"],
+.registration-form .error input[type="password"] {
+    border-color: #ff0000; /* Красная рамка для полей с ошибками */
+}
+
+/* Стилизация сообщений об ошибках */
+.create-post-form .error-message,
+.registration-form .error-message {
+    color: #ff0000;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+.profile-link {
+    text-decoration: none;
+    color: inherit;
+    transition: .1s;
+}
+.profile-link:hover {
+    text-decoration: none;
+}
+
+.profile-posts-filter {
+    display: flex;
+    justify-content: left;
+}
+

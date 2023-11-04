@@ -1,0 +1,38 @@
+{% extends 'forum_app/profile_base.html' %}
+{% load static %}
+
+{% block profile_content %}
+<div class="card profile-card">
+    <div class="card-header">
+        <h3>Настройки профиля</h3>
+    </div>
+    <div class="card-body">
+        <form method="post">
+            {% csrf_token %}
+
+            {% for f in form %}
+                <div class="form-group row">
+                    {% if form.password != f %}
+                    <label for="{{ f.id_for_label }}" class="col-sm-4 col-form-label">{{ f.label }}</label>
+                    <div class="col-sm-8">
+                        {{ f }}
+                    </div>
+                    <div class="error-message">
+                        {{ f.errors }}
+                    </div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+            <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+
+            <div class="mt-5"><button id="logout-button" type="button" class="btn btn-outline-danger">Выйти из аккаунта</button></div>
+            <script>
+                document.getElementById('logout-button').addEventListener('click', function() {
+                    window.location.href = "{% url 'log-out' %}";
+                });
+            </script>
+
+        </form>
+    </div>
+</div>
+{% endblock %}

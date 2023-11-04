@@ -1,0 +1,50 @@
+{% extends 'forum_app/base.html' %}
+{% load humanize %}
+{% load markdown_filter %}
+{% load static %}
+
+{% block content %}
+    <section class="categories main-section">
+        <h2>Категории</h2>
+        <ul>
+            {% for category in categories %}
+            <a href="{{ category.get_absolute_url }}">
+                <li>
+                    <div class="post-title">{{ category.name }}</div>
+                    <p class="post-descr">{{ category.descr }}</p>
+                </li>
+            </a>
+            {% endfor %}
+        </ul>
+    </section>
+
+    <section class="latest-threads main-section">
+        <h2>Последние темы</h2>
+        <ul>
+        {% for post in latest_posts %}
+            <a href="{{ post.get_absolute_url }}">
+                <li>
+                    <div class="post-title">{{ post.title }}</div>
+                    <p class="post-descr">
+                        By {{ post.user.username }} | {% if post.created_at|time_dif %}{{ post.created_at|naturaltime }}{% else %}{{ post.created_at|naturalday:"b j, Y" }}{% endif %}
+                    </p>
+                </li>
+            </a>
+        {% endfor %}
+        </ul>
+    </section>
+
+    <section class="latest-threads main-section">
+        <h2>Популярное</h2>
+        <ul>
+            {% for post in popular_posts %}
+            <a href="{{ post.get_absolute_url }}">
+                <li>
+                    <div class="post-title">{{ post.title }}</div>
+                    <p class="post-descr">By {{ post.user.username }} | {{ post.created_at|date:"m.d.Y" }}</p>
+                </li>
+            </a>
+            {% endfor %}
+        </ul>
+    </section>
+{% endblock %}
