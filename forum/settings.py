@@ -8,14 +8,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
-# SECRET_KEY = 'django-insecure-*af+%ca)dn&jz!9lu*ed*7jxe__8db8b0$snpzp84+pn*c4)i3'
-# DEBUG = 1
-# ALLOWED_HOSTS = ('localhost', '127.0.0.1', '192.168.0.103', '[::1]')
+SECRET_KEY = 'django-insecure-*af+%ca)dn&jz!9lu*ed*7jxe__8db8b0$snpzp84+pn*c4)i3'
+DEBUG = 1
+ALLOWED_HOSTS = ('localhost', '127.0.0.1', '192.168.0.103', '[::1]')
 
-SECRET_KEY = os.environ.get('SECRET_KEY')
-DEBUG = os.environ.get('DEBUG', default=0)
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS').split() + [f"192.168.0.1{i}{j}" for i in range(3) for j in range(10)]
-print(ALLOWED_HOSTS)
+# SECRET_KEY = os.environ.get('SECRET_KEY')
+# DEBUG = os.environ.get('DEBUG', default=0)
+# ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS').split() + [f"192.168.0.1{i}{j}" for i in range(3) for j in range(10)]
 
 
 INSTALLED_APPS = [

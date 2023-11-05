@@ -21,9 +21,15 @@
                 Фильтр по действиям
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <li><a class="dropdown-item" href="?action=new_post">Новые посты</a></li>
-                <li><a class="dropdown-item" href="?action=comments">Комментарии</a></li>
-                <li><a class="dropdown-item" href="?action=likes">Лайки</a></li>
+                <li><a class="dropdown-item" href="?action=new_post">
+                    Новые посты{% if "new_post" in request.GET.action %} ✓{% endif %}
+                </a></li>
+                <li><a class="dropdown-item" href="?action=comments">
+                    Комментарии{% if "comments" in request.GET.action %} ✓{% endif %}
+                </a></li>
+                <li><a class="dropdown-item" href="?action=likes">
+                    Лайки{% if "likes" in request.GET.action %} ✓{% endif %}
+                </a></li>
             </div>
         </div>
         <ul class="list-group list-group-flush">

@@ -10,7 +10,7 @@ class MainView(View):
         main_categories = Category.objects.filter(post__isnull=False).distinct()[:5]
         active_posts = Post.objects.filter(is_active=True)
         latest_posts = active_posts.order_by('-created_at')[:5]
-        popular_posts = active_posts.order_by('views_cnt')[:5]
+        popular_posts = active_posts.order_by('-views_cnt')[:5]
         context = {
             'categories': main_categories,
             'latest_posts': latest_posts,
