@@ -3,7 +3,7 @@ from forum_app.models import Category
 
 
 class ForumListView(ListView):
-    paginate_by = 5
+    paginate_by = 2
     model = Category
     template_name = 'forum_app/forum.html'
     context_object_name = 'categories'

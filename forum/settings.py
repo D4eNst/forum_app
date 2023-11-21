@@ -10,7 +10,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-*af+%ca)dn&jz!9lu*ed*7jxe__8db8b0$snpzp84+pn*c4)i3'
 DEBUG = 1
-ALLOWED_HOSTS = ('localhost', '127.0.0.1', '192.168.0.103', '[::1]')
+ALLOWED_HOSTS = ('localhost', '127.0.0.1', '192.168.0.103', '10.17.43.123', '[::1]')
 
 # SECRET_KEY = os.environ.get('SECRET_KEY')
 # DEBUG = os.environ.get('DEBUG', default=0)
@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     'forum_app.apps.ForumAppConfig',
     'django.contrib.humanize',
     'tinymce',
+    'rest_framework',
 ]
 
 
