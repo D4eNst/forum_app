@@ -3,8 +3,9 @@ from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse
 from django.views.generic.edit import UpdateView
 
-from forum_app.models import Post, Category
 from forum_app.forms import AddPostForm
+from forum_app.models import Post
+from .utils import filter_category
 
 
 class EditPost(UpdateView, UserPassesTestMixin):
@@ -23,19 +24,8 @@ class EditPost(UpdateView, UserPassesTestMixin):
 
     def get_form(self, form_class=None):
         form = super(EditPost, self).get_form(form_class)
-        is_admin = self.request.user.is_staff
 
-        if not is_admin:
-            not_empty_cat = Category.objects.filter(post__isnull=False, post__is_active=True)
-            users_empty_cat = Category.objects.filter(post__isnull=True, user=self.request.user)
-            users_draft_cat = Category.objects.filter(post__is_active=False, user=self.request.user)
-
-            category_queryset = (not_empty_cat | users_empty_cat | users_draft_cat).distinct()
-            form.fields['category'].queryset = category_queryset
-        else:
-            form.fields['category'].queryset = Category.objects.all()
-
-        return form
+        return filter_category(form, self.request.user)
 
     def test_func(self):
         user = self.request.user

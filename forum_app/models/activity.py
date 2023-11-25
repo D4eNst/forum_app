@@ -4,6 +4,7 @@ from forum_app.models import CustomUser, Post
 
 class ActivityName(models.Model):
     name = models.CharField(max_length=50, verbose_name="Имя события")
+
     def __str__(self):
         return f'{self.name}'
 
@@ -17,6 +18,3 @@ class UserActivity(models.Model):
 
     def __str__(self):
         return f'{self.action_type} "{self.post.title}"'
-
-
-

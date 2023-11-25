@@ -7,6 +7,7 @@ from django.views.generic import DetailView
 
 from forum_app.forms import AddCommentForm
 from forum_app.models import Post, Comment, UserActivity, ActivityName
+from forum_app.views.main_views.utils import create_activity
 
 
 class PostDetailView(DetailView):
@@ -18,7 +19,6 @@ class PostDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context['comments'] = self.object.comment_set.all()
         context['form'] = AddCommentForm()
-        f = AddCommentForm()
         return context
 
     def get_object(self, queryset=None):
@@ -38,17 +38,26 @@ class PostDetailView(DetailView):
         return obj
 
     def post(self, request, *args, **kwargs):
+        obj = self.get_object()
+        if not obj.is_active and not self.request.user.is_superuser and self.request.user != obj.user:
+            raise Http404
+
         if request.POST.get('confirm_post', 'false') == 'true':
-            current_post = self.get_object()
+            current_post = obj
             current_post.is_active = True
             current_post.save()
 
-            UserActivity.objects.create(
-                user=current_post.user,
-                action_type="Пользователь написал новый пост",
-                action_name=ActivityName.objects.get(name="new_post"),
-                post=current_post
-            )
+            create_activity(user=self.request.user,
+                            post=current_post,
+                            action_type="Пользователь написал новый пост",
+                            action_name="new_post")
+
+            # UserActivity.objects.create(
+            #     user=current_post.user,
+            #     action_type="Пользователь написал новый пост",
+            #     action_name=ActivityName.objects.get(name="new_post"),
+            #     post=current_post
+            # )
             return self.get(request, *args, **kwargs)
 
         comment_dict = {
@@ -61,12 +70,17 @@ class PostDetailView(DetailView):
             comment = Comment(**comment_dict)
             comment.save()
 
-            UserActivity.objects.create(
-                user=self.request.user,
-                action_type="Пользователь прокомментировал пост",
-                action_name=ActivityName.objects.get(name="comments"),
-                post=comment_dict.get('post')
-            )
+            create_activity(user=self.request.user,
+                            post=comment_dict.get('post'),
+                            action_type="Пользователь прокомментировал пост",
+                            action_name="comments")
+
+            # UserActivity.objects.create(
+            #     user=self.request.user,
+            #     action_type="Пользователь прокомментировал пост",
+            #     action_name=ActivityName.objects.get(name="comments"),
+            #     post=comment_dict.get('post')
+            # )
             current_url = request.get_full_path()
             current_url += f'#com-{comment.id}'
 
@@ -102,7 +116,7 @@ def toggle_like(request, obj_type, obj_id):
                     if model is Post:
                         old_act = UserActivity.objects.filter(
                             user=request.user,
-                            action_type="Пользователь поставил лайк на пост",
+                            action_name__name="likes",
                             post=Post.objects.get(id=obj_id)
                         )
                         if old_act:
@@ -112,12 +126,10 @@ def toggle_like(request, obj_type, obj_id):
                     liked = True
                     likes_count += 1
                     if model is Post:
-                        UserActivity.objects.create(
-                            user=request.user,
-                            action_type="Пользователь поставил лайк на пост",
-                            action_name=ActivityName.objects.get(name="likes"),
-                            post=Post.objects.get(id=obj_id)
-                        )
+                        create_activity(user=request.user,
+                                        post=Post.objects.get(id=obj_id),
+                                        action_type="Пользователь поставил лайк на пост",
+                                        action_name="likes")
                 obj.save()
 
                 response_data = {
@@ -139,10 +151,4 @@ def toggle_comment_like(request, comment_id):
 
 
 def toggle_post_like(request, post_id):
-    UserActivity.objects.filter(
-        user=request.user,
-        action_type="Пользователь поставил лайк на пост",
-        post=Post.objects.get(id=post_id)
-    )
-
     return toggle_like(request, 'post', post_id)

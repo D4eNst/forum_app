@@ -4,6 +4,7 @@ from django.views.generic.edit import CreateView
 
 from forum_app.models import Post, UserActivity, ActivityName, Category
 from forum_app.forms import AddPostForm
+from .utils import create_activity, filter_category
 
 
 class CreatePost(LoginRequiredMixin, CreateView):
@@ -13,30 +14,17 @@ class CreatePost(LoginRequiredMixin, CreateView):
 
     def get_form(self, form_class=None):
         form = super(CreatePost, self).get_form(form_class)
-        is_admin = self.request.user.is_staff
 
-        if not is_admin:
-            not_empty_cat = Category.objects.filter(post__isnull=False, post__is_active=True)
-            users_empty_cat = Category.objects.filter(post__isnull=True, user=self.request.user)
-            users_draft_cat = Category.objects.filter(post__is_active=False, user=self.request.user)
-
-            category_queryset = (not_empty_cat | users_empty_cat | users_draft_cat).distinct()
-            form.fields['category'].queryset = category_queryset
-        else:
-            form.fields['category'].queryset = Category.objects.all()
-
-        return form
+        return filter_category(form, self.request.user)
 
     def form_valid(self, form):
         form.instance.user = self.request.user
         self.object = form.save()
 
         if form.instance.is_active:
-            UserActivity.objects.create(
-                user=self.request.user,
-                action_type="Пользователь написал новый пост",
-                action_name=ActivityName.objects.get(name="new_post"),
-                post=form.instance
-            )
+            create_activity(user=self.request.user,
+                            post=form.instance,
+                            action_type="Пользователь написал новый пост",
+                            action_name="new_post")
 
         return HttpResponseRedirect(self.get_success_url())
