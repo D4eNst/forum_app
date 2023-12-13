@@ -5,7 +5,7 @@ from django.views.generic.edit import UpdateView
 
 from forum_app.forms import AddPostForm
 from forum_app.models import Post
-from .utils import filter_category
+from .utils import filter_category_form
 
 
 class EditPost(UpdateView, UserPassesTestMixin):
@@ -25,7 +25,7 @@ class EditPost(UpdateView, UserPassesTestMixin):
     def get_form(self, form_class=None):
         form = super(EditPost, self).get_form(form_class)
 
-        return filter_category(form, self.request.user)
+        return filter_category_form(form, self.request.user)
 
     def test_func(self):
         user = self.request.user

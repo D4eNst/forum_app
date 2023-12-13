@@ -13,5 +13,7 @@ from .main_views.history import ProfileHistoryView
 from .main_views.settings import ProfileSettingsView
 from .main_views.profile_users_posts import ProfilePostListView, ProfileDraftsListView
 
-
-
+from .api_views.post_api_view import PostApiView
+from .api_views.category_api_view import CategoryApiView
+from .api_views.user_api_view import UserApiView
+from .api_views.comment_api_view import CommentApiView

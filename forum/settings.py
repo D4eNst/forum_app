@@ -10,7 +10,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-*af+%ca)dn&jz!9lu*ed*7jxe__8db8b0$snpzp84+pn*c4)i3'
 DEBUG = 1
-ALLOWED_HOSTS = ('localhost', '127.0.0.1', '192.168.0.103', '185.117.154.104', '[::1]')
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '185.117.154.104', '[::1]'] + [f"192.168.0.1{i}{j}" for i in range(3) for j in range(10)]
 
 # SECRET_KEY = os.environ.get('SECRET_KEY')
 # DEBUG = os.environ.get('DEBUG', default=0)
@@ -28,6 +28,8 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'tinymce',
     'rest_framework',
+    'rest_framework.authtoken',
+    'djoser',
 ]
 
 
@@ -124,3 +126,26 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/'
 
+REST_FRAMEWORK = {
+    'DEFAULT_RENDER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',
+    ],
+
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',
+    ],
+
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ]
+}
+
+DJOSER = {
+    'SERIALIZERS': {
+        'user': 'forum_app.serializers.UserSerializer',
+        'user_create': 'forum_app.serializers.UserSerializer',
+    },
+}

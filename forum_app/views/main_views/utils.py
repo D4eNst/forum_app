@@ -17,17 +17,25 @@ def create_activity(user, post: Post, action_type: str, action_name: str) -> Non
     )
 
 
-def filter_category(form, user) -> Any:
+def filter_category(user) -> Any:
     is_admin = user.is_staff
 
-    if not is_admin:
-        not_empty_cat = Category.objects.filter(post__isnull=False, post__is_active=True)
-        users_empty_cat = Category.objects.filter(post__isnull=True, user=user)
-        users_draft_cat = Category.objects.filter(post__is_active=False, user=user)
+    if is_admin:
+        return Category.objects.all()
 
-        category_queryset = (not_empty_cat | users_empty_cat | users_draft_cat).distinct()
-        form.fields['category'].queryset = category_queryset
-    else:
-        form.fields['category'].queryset = Category.objects.all()
+    not_empty_cat = Category.objects.filter(post__isnull=False, post__is_active=True)
+    if not user.is_authenticated:
+        return not_empty_cat.distinct()
+    users_empty_cat = Category.objects.filter(post__isnull=True, user=user)
+    users_draft_cat = Category.objects.filter(post__is_active=False, user=user)
+
+    category_queryset = (not_empty_cat | users_empty_cat | users_draft_cat).distinct()
+    return category_queryset
+
+
+def filter_category_form(form, user) -> Any:
+
+    form.fields['category'].queryset = filter_category(user)
 
     return form
+

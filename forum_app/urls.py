@@ -1,5 +1,14 @@
-from django.urls import path
+from django.urls import path, include, re_path
+from rest_framework.routers import DefaultRouter
+
 import forum_app.views as views
+
+router = DefaultRouter()
+router.register(r'posts', views.PostApiView, basename='api-post')
+router.register(r'categories', views.CategoryApiView, basename='api-categories')
+router.register(r'users', views.UserApiView, basename='api-users')
+router.register(r'comments', views.CommentApiView, basename='api-comment')
+
 
 urlpatterns = [
     path('', views.MainView.as_view(), name='main-page'),
@@ -31,4 +40,7 @@ urlpatterns = [
     path('comment/edit/<int:comment_id>/', views.UpdateComment.as_view(), name='edit-comment'),
     path('comment/delete/<int:comment_id>', views.delete_comment, name='delete-comment'),
 
+    path('api/v1/auth/', include('djoser.urls')),
+    re_path(r'^auth/', include('djoser.urls.authtoken')),
+    path('api/v1/', include(router.urls)),
 ]

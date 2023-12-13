@@ -4,7 +4,7 @@ from django.views.generic.edit import CreateView
 
 from forum_app.models import Post, UserActivity, ActivityName, Category
 from forum_app.forms import AddPostForm
-from .utils import create_activity, filter_category
+from .utils import create_activity, filter_category_form
 
 
 class CreatePost(LoginRequiredMixin, CreateView):
@@ -15,7 +15,7 @@ class CreatePost(LoginRequiredMixin, CreateView):
     def get_form(self, form_class=None):
         form = super(CreatePost, self).get_form(form_class)
 
-        return filter_category(form, self.request.user)
+        return filter_category_form(form, self.request.user)
 
     def form_valid(self, form):
         form.instance.user = self.request.user
