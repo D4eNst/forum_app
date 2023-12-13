@@ -24,7 +24,7 @@ urlpatterns = [
     path('ajax_del_category/', views.ajax_del_category, name='ajax-del-category'),
 
     path('singup/', views.RegisterView.as_view(), name='signup'),
-    path('login/', views.LoginUserView.as_view(), name='login'),
+    path('login/', views.LoginUserView.as_view(), name='site-login'),
     path('log-out/', views.logout_user, name='log-out'),
 
     path('toggle-comment-like/<int:comment_id>/', views.toggle_comment_like, name='toggle-comment-like'),

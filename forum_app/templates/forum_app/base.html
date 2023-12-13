@@ -34,7 +34,7 @@
                 <ul>
                     {% if not user.is_authenticated %}
                     <li><a
-                        href="{% url 'login' %}{% if request.GET.next %}?next={{ request.GET.next }}{% else %}?next={{ request.path }}{% endif %}"
+                        href="{% url 'site-login' %}{% if request.GET.next %}?next={{ request.GET.next }}{% else %}?next={{ request.path }}{% endif %}"
                         class="login">
                         Вход
                     </a></li>
