@@ -4,14 +4,12 @@ from forum_app.models import Comment
 
 
 class CommentSerializer(serializers.ModelSerializer):
+    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
+
     class Meta:
         model = Comment
         fields = "__all__"
         read_only_fields = ('likes',)
-
-        # extra_kwargs = {
-        #     'likes': {'read_only': True}
-        # }
 
 
 class CommentAddSerializer(serializers.ModelSerializer):
