@@ -1,4 +1,7 @@
+from django.db.models import QuerySet
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets, status
+from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
 
 from forum_app.models import Post
@@ -10,6 +13,14 @@ from ..main_views.utils import create_activity
 class PostApiView(viewsets.ModelViewSet):
     serializer_class = PostSerializer
     permission_classes = [IsOwnerOrReadOnly]
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['category', 'user', 'is_active']
+
+    def filter_queryset(self, queryset):
+        try:
+            return super().filter_queryset(queryset)
+        except ValidationError as e:
+            return queryset.none()
 
     def get_queryset(self):
         posts = Post.objects.filter(is_active=True)

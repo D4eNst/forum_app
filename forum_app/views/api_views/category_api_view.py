@@ -12,7 +12,7 @@ from .permissions import IsOwnerOrReadOnly
 class CategoryApiView(viewsets.ModelViewSet):
     serializer_class = CategorySerializer
     http_method_names = ['get', 'post', 'delete']
-    permission_classes = [IsOwnerOrReadOnly, IsAdminUser]
+    permission_classes = [IsOwnerOrReadOnly]
 
     def get_queryset(self):
         return filter_category(user=self.request.user)
