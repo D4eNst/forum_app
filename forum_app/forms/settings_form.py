@@ -1,8 +1,7 @@
 from django import forms
-from django.contrib.auth import update_session_auth_hash
 
-from forum_app.models import CustomUser
 from forum_app.forms import CustomUserChangeForm
+from forum_app.models import CustomUser
 
 
 class SettingsForm(CustomUserChangeForm):

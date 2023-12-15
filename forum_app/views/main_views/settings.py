@@ -1,4 +1,4 @@
-from django.contrib.auth.mixins import UserPassesTestMixin, AccessMixin
+from django.contrib.auth.mixins import AccessMixin
 from django.urls import reverse
 from django.views.generic import UpdateView
 

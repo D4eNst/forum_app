@@ -1,10 +1,7 @@
 from rest_framework import viewsets
-from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
 
-from forum_app.models import Category
 from forum_app.serializers import CategorySerializer
-
 from forum_app.views.main_views.utils import filter_category
 from .permissions import IsOwnerOrReadOnly
 

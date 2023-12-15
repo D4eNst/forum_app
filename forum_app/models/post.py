@@ -1,10 +1,6 @@
 from django.db import models
 from django.urls import reverse
-from markdownx.models import MarkdownxField
 from tinymce.models import HTMLField
-
-# from .category import Category
-# from .users import CustomUser
 
 
 class Post(models.Model):

@@ -1,10 +1,10 @@
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse
-from django.views.generic.edit import CreateView, UpdateView
+from django.views.generic.edit import UpdateView
 
-from forum_app.models import Comment
 from forum_app.forms import AddCommentForm
+from forum_app.models import Comment
 
 
 class UpdateComment(UpdateView, UserPassesTestMixin):

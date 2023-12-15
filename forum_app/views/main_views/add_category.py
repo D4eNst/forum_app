@@ -1,9 +1,8 @@
 import json
-from slugify import slugify
-from django.contrib.auth.mixins import LoginRequiredMixin
+
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import JsonResponse
-from django.views.generic.edit import CreateView
+from slugify import slugify
 
 from forum_app.models import Category
 

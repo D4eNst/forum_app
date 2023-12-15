@@ -1,5 +1,4 @@
 from django.shortcuts import render
-from django.utils.timezone import now
 from django.views import View
 
 from forum_app.models import Category, Post

@@ -1,8 +1,6 @@
 from django.db import models
 from django.urls import reverse
 
-# from forum_app.models import CustomUser
-
 
 class Category(models.Model):
     name = models.CharField(max_length=50, verbose_name='Название', db_index=True)

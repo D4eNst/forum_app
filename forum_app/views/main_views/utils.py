@@ -1,6 +1,6 @@
 from typing import Any
 
-from forum_app.models import UserActivity, CustomUser, ActivityName, Post, Category
+from forum_app.models import UserActivity, ActivityName, Post, Category
 
 
 def create_activity(user, post: Post, action_type: str, action_name: str) -> None:

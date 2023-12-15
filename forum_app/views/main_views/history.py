@@ -1,5 +1,6 @@
-from django.views.generic import DetailView, ListView
-from forum_app.models import Post, Comment, CustomUser, UserActivity
+from django.views.generic import ListView
+
+from forum_app.models import CustomUser, UserActivity
 
 
 class ProfileHistoryView(ListView):

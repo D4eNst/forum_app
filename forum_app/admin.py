@@ -1,9 +1,5 @@
 from django.contrib import admin
-from django.db import models
-from django.contrib.auth import get_user_model
-from markdownx.admin import MarkdownxModelAdmin
 from django.contrib.auth.admin import UserAdmin
-from markdownx.widgets import AdminMarkdownxWidget
 
 from .forms import CustomUserCreationForm, CustomUserChangeForm
 from .models import CustomUser, Category, Post, Comment, UserActivity, ActivityName

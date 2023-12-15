@@ -6,7 +6,7 @@ from django.http import HttpResponseRedirect, JsonResponse, Http404
 from django.views.generic import DetailView
 
 from forum_app.forms import AddCommentForm
-from forum_app.models import Post, Comment, UserActivity, ActivityName
+from forum_app.models import Post, Comment, UserActivity
 from forum_app.views.main_views.utils import create_activity
 
 

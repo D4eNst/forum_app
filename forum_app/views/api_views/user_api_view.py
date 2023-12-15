@@ -1,4 +1,4 @@
-from rest_framework import generics, viewsets
+from rest_framework import viewsets
 from rest_framework.response import Response
 
 from forum_app.models import CustomUser

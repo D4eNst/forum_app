@@ -1,7 +1,6 @@
-from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
-from django.views.generic import View, CreateView
-# from forum_app.models import CustomUser
+from django.views.generic import CreateView
+
 from forum_app.forms import RegisterForm
 
 

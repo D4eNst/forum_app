@@ -2,8 +2,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
 from django.views.generic.edit import CreateView
 
-from forum_app.models import Post, UserActivity, ActivityName, Category
 from forum_app.forms import AddPostForm
+from forum_app.models import Post
 from .utils import create_activity, filter_category_form
 
 

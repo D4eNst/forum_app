@@ -1,7 +1,6 @@
 from django.db.models import Count
 from django.views.generic import DetailView
 
-import forum_app.models
 from forum_app.models import Post, Comment, CustomUser, UserActivity
 
 

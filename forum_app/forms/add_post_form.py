@@ -2,7 +2,7 @@ from django import forms
 from django.utils.text import slugify
 from tinymce.widgets import TinyMCE
 
-from forum_app.models import Post, Category
+from forum_app.models import Post
 
 
 class AddPostForm(forms.ModelForm):

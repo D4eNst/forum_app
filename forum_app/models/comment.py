@@ -1,8 +1,4 @@
-import datetime
-
 from django.db import models
-# from .post import Post
-# from .users import CustomUser
 
 
 class Comment(models.Model):
